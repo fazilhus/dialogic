@@ -14,6 +14,7 @@ var inspector_plugin: EditorInspectorPlugin = null
 ## Initialization
 func _init() -> void:
 	self.name = "DialogicPlugin"
+	DialogicSettings.init()
 
 
 #region ACTIVATION & EDITOR SETUP

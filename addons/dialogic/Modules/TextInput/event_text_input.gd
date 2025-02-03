@@ -92,7 +92,7 @@ func get_var_suggestions(filter:String="") -> Dictionary:
 		suggestions[filter] = {
 			'value'			: filter,
 			'editor_icon'	: ["GuiScrollArrowRight", "EditorIcons"]}
-	var vars: Dictionary = ProjectSettings.get_setting('dialogic/variables', {})
+	var vars: Dictionary = DialogicSettings.get_setting('dialogic/variables', {})
 	for var_path in DialogicUtil.list_variables(vars, "", DialogicUtil.VarTypes.STRING):
 		suggestions[var_path] = {'value':var_path, 'icon':load("res://addons/dialogic/Editor/Images/Pieces/variable.svg")}
 	return suggestions

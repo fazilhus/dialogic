@@ -80,11 +80,11 @@ func _ready() -> void:
 	dialogic.event_handled.connect(store_full_event)
 	dialogic.event_handled.connect(_check_seen)
 
-	simple_history_enabled = ProjectSettings.get_setting('dialogic/history/simple_history_enabled', simple_history_enabled)
-	simple_history_save = ProjectSettings.get_setting('dialogic/history/simple_history_save', simple_history_save)
-	full_event_history_enabled = ProjectSettings.get_setting('dialogic/history/full_history_enabled', full_event_history_enabled)
-	full_event_history_save = ProjectSettings.get_setting('dialogic/history/full_history_save', full_event_history_save)
-	visited_event_history_enabled = ProjectSettings.get_setting('dialogic/history/visited_event_history_enabled', visited_event_history_enabled)
+	simple_history_enabled = DialogicSettings.get_setting('dialogic/history/simple_history_enabled', simple_history_enabled)
+	simple_history_save = DialogicSettings.get_setting('dialogic/history/simple_history_save', simple_history_save)
+	full_event_history_enabled = DialogicSettings.get_setting('dialogic/history/full_history_enabled', full_event_history_enabled)
+	full_event_history_save = DialogicSettings.get_setting('dialogic/history/full_history_save', full_event_history_save)
+	visited_event_history_enabled = DialogicSettings.get_setting('dialogic/history/visited_event_history_enabled', visited_event_history_enabled)
 
 
 
@@ -99,8 +99,8 @@ func _on_save(info: Dictionary) -> void:
 
 
 func post_install() -> void:
-	save_visited_history_on_autosave = ProjectSettings.get_setting('dialogic/history/save_on_autosave', save_visited_history_on_autosave)
-	save_visited_history_on_save = ProjectSettings.get_setting('dialogic/history/save_on_save', save_visited_history_on_save)
+	save_visited_history_on_autosave = DialogicSettings.get_setting('dialogic/history/save_on_autosave', save_visited_history_on_autosave)
+	save_visited_history_on_save = DialogicSettings.get_setting('dialogic/history/save_on_save', save_visited_history_on_save)
 
 
 func clear_game_state(clear_flag := DialogicGameHandler.ClearFlags.FULL_CLEAR) -> void:

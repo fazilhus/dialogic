@@ -33,10 +33,10 @@ func _recheck(data: Dictionary, force:=false):
 	var scene: Variant = null
 
 	if current_portrait_data.get('scene', '').is_empty():
-		if ProjectSettings.get_setting('dialogic/portraits/default_portrait', '').is_empty():
+		if DialogicSettings.get_setting('dialogic/portraits/default_portrait', '').is_empty():
 			scene = load(character_editor.def_portrait_path)
 		else:
-			scene = load(ProjectSettings.get_setting('dialogic/portraits/default_portrait', ''))
+			scene = load(DialogicSettings.get_setting('dialogic/portraits/default_portrait', ''))
 	else:
 		scene = load(current_portrait_data.get('scene'))
 

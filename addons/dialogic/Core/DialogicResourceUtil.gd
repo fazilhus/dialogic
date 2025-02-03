@@ -21,7 +21,7 @@ static func get_directory(extension:String) -> Dictionary:
 	if Engine.has_meta(extension+'_directory'):
 		return Engine.get_meta(extension+'_directory', {})
 
-	var directory: Dictionary = ProjectSettings.get_setting("dialogic/directories/"+extension+'_directory', {})
+	var directory: Dictionary = DialogicSettings.get_setting("dialogic/directories/"+extension+'_directory', {})
 	Engine.set_meta(extension+'_directory', directory)
 	return directory
 
@@ -29,8 +29,8 @@ static func get_directory(extension:String) -> Dictionary:
 static func set_directory(extension:String, directory:Dictionary) -> void:
 	extension = extension.trim_prefix('.')
 	if Engine.is_editor_hint():
-		ProjectSettings.set_setting("dialogic/directories/"+extension+'_directory', directory)
-		ProjectSettings.save()
+		DialogicSettings.set_setting("dialogic/directories/"+extension+'_directory', directory)
+		DialogicSettings.save()
 	Engine.set_meta(extension+'_directory', directory)
 
 

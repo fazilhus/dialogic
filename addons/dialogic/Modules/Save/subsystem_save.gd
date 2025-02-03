@@ -264,9 +264,9 @@ func get_global_info(key: String, default: Variant) -> Variant:
 ## Gets the encryption password from the project settings if it has been set.
 ## If no password has been set, an empty string is returned.
 func get_encryption_password() -> String:
-	if OS.is_debug_build() and ProjectSettings.get_setting('dialogic/save/encryption_on_exports_only', true):
+	if OS.is_debug_build() and DialogicSettings.get_setting('dialogic/save/encryption_on_exports_only', true):
 		return ""
-	return ProjectSettings.get_setting("dialogic/save/encryption_password", "")
+	return DialogicSettings.get_setting("dialogic/save/encryption_password", "")
 
 #endregion
 
@@ -354,7 +354,7 @@ func get_slot_path(slot_name: String) -> String:
 
 ## Returns the default slot name defined in the dialogic settings
 func get_default_slot() -> String:
-	return ProjectSettings.get_setting('dialogic/save/default_slot', 'Default')
+	return DialogicSettings.get_setting('dialogic/save/default_slot', 'Default')
 
 
 ## Returns the latest slot or empty if nothing was saved yet
@@ -475,9 +475,9 @@ func _ready() -> void:
 	var _result := autosave_timer.timeout.connect(_on_autosave_timer_timeout)
 	add_child(autosave_timer)
 
-	autosave_enabled = ProjectSettings.get_setting(AUTO_SAVE_SETTINGS, autosave_enabled)
-	autosave_mode = ProjectSettings.get_setting(AUTO_SAVE_MODE_SETTINGS, autosave_mode)
-	autosave_time = ProjectSettings.get_setting(AUTO_SAVE_TIME_SETTINGS, autosave_time)
+	autosave_enabled = DialogicSettings.get_setting(AUTO_SAVE_SETTINGS, autosave_enabled)
+	autosave_mode = DialogicSettings.get_setting(AUTO_SAVE_MODE_SETTINGS, autosave_mode)
+	autosave_time = DialogicSettings.get_setting(AUTO_SAVE_TIME_SETTINGS, autosave_time)
 
 	_result = dialogic.event_handled.connect(_on_dialogic_event_handled)
 	_result = dialogic.timeline_started.connect(_on_start_or_end_autosave)

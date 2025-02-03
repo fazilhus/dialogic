@@ -114,13 +114,13 @@ func _input(event:InputEvent) -> void:
 
 
 func is_input_pressed(event: InputEvent, exact := false) -> bool:
-	var action: String = ProjectSettings.get_setting(_SETTING_INPUT_ACTION, _SETTING_INPUT_ACTION_DEFAULT)
+	var action: String = DialogicSettings.get_setting(_SETTING_INPUT_ACTION, _SETTING_INPUT_ACTION_DEFAULT)
 	return (event is InputEventAction and event.action == action) or Input.is_action_just_pressed(action, exact)
 
 
 ## This is called from the gui_input of the InputCatcher and DialogText nodes
 func handle_node_gui_input(event:InputEvent) -> void:
-	if Input.is_action_just_pressed(ProjectSettings.get_setting(_SETTING_INPUT_ACTION, _SETTING_INPUT_ACTION_DEFAULT)):
+	if Input.is_action_just_pressed(DialogicSettings.get_setting(_SETTING_INPUT_ACTION, _SETTING_INPUT_ACTION_DEFAULT)):
 		if event is InputEventMouseButton and event.pressed:
 			input_was_mouse_input = true
 			handle_input()

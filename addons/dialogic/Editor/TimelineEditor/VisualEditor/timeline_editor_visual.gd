@@ -573,7 +573,7 @@ func copy_selected_events() -> void:
 				event_copy_array[-1] += '#'+str(item.parent_node.get_index())
 	DisplayServer.clipboard_set(var_to_str({
 			"events":event_copy_array,
-			"project_name": ProjectSettings.get_setting("application/config/name")
+			"project_name": DialogicSettings.get_setting("application/config/name")
 		}))
 
 
@@ -582,7 +582,7 @@ func get_clipboard_data() -> Array:
 
 	if clipboard_parse is Dictionary:
 		if clipboard_parse.has("project_name"):
-			if clipboard_parse.project_name != ProjectSettings.get_setting("application/config/name"):
+			if clipboard_parse.project_name != DialogicSettings.get_setting("application/config/name"):
 				print("[Dialogic] Be careful when copying from another project!")
 		if clipboard_parse.has('events'):
 			return clipboard_parse.events

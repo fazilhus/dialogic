@@ -97,7 +97,7 @@ func get_bus_suggestions() -> Dictionary:
 
 func get_channel_list() -> Array:
 	var channel_name_list := []
-	for i in ProjectSettings.get_setting('dialogic/audio/max_channels', 4):
+	for i in DialogicSettings.get_setting('dialogic/audio/max_channels', 4):
 		channel_name_list.append({
 			'label': 'Channel %s' % (i + 1),
 			'value': i,

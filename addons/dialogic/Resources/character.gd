@@ -93,7 +93,7 @@ func _get_property_original_text(property: TranslatedProperties) -> String:
 func _get_property_translated(property: TranslatedProperties) -> String:
 	var try_translation: bool = (_translation_id != null
 		and not _translation_id.is_empty()
-		and ProjectSettings.get_setting('dialogic/translation/enabled', false)
+		and DialogicSettings.get_setting('dialogic/translation/enabled', false)
 	)
 
 	if try_translation:

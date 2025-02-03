@@ -20,12 +20,12 @@ func _register() -> void:
 
 func _open(argument:Variant = null):
 	%ReferenceInfo.hide()
-	%Tree.load_info(ProjectSettings.get_setting('dialogic/variables', {}))
+	%Tree.load_info(DialogicSettings.get_setting('dialogic/variables', {}))
 
 
 func _save() -> void:
-	ProjectSettings.set_setting('dialogic/variables', %Tree.get_info())
-	ProjectSettings.save()
+	DialogicSettings.set_setting('dialogic/variables', %Tree.get_info())
+	DialogicSettings.save()
 
 
 func _close() -> void:

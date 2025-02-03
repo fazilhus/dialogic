@@ -75,12 +75,12 @@ func _init() -> void:
 	autoadvance_timer.timeout.connect(_on_autoadvance_timer_timeout)
 	toggled.connect(_on_toggled)
 
-	enabled_forced = ProjectSettings.get_setting('dialogic/text/autoadvance_enabled', false)
-	fixed_delay = ProjectSettings.get_setting('dialogic/text/autoadvance_fixed_delay', 1)
-	per_word_delay = ProjectSettings.get_setting('dialogic/text/autoadvance_per_word_delay', 0)
-	per_character_delay = ProjectSettings.get_setting('dialogic/text/autoadvance_per_character_delay', 0.1)
-	ignored_characters_enabled = ProjectSettings.get_setting('dialogic/text/autoadvance_ignored_characters_enabled', true)
-	ignored_characters = ProjectSettings.get_setting('dialogic/text/autoadvance_ignored_characters', {})
+	enabled_forced = DialogicSettings.get_setting('dialogic/text/autoadvance_enabled', false)
+	fixed_delay = DialogicSettings.get_setting('dialogic/text/autoadvance_fixed_delay', 1)
+	per_word_delay = DialogicSettings.get_setting('dialogic/text/autoadvance_per_word_delay', 0)
+	per_character_delay = DialogicSettings.get_setting('dialogic/text/autoadvance_per_character_delay', 0.1)
+	ignored_characters_enabled = DialogicSettings.get_setting('dialogic/text/autoadvance_ignored_characters_enabled', true)
+	ignored_characters = DialogicSettings.get_setting('dialogic/text/autoadvance_ignored_characters', {})
 
 #region AUTOADVANCE INTERNALS
 

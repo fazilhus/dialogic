@@ -25,9 +25,8 @@ func clear_game_state(_clear_flag:=DialogicGameHandler.ClearFlags.FULL_CLEAR):
 
 func _reload_settings() -> void:
 	settings = {}
-	for prop in ProjectSettings.get_property_list():
-		if prop.name.begins_with('dialogic/settings'):
-			settings[prop.name.trim_prefix('dialogic/settings/')] = ProjectSettings.get_setting(prop.name)
+	if DialogicSettings.has_setting("dialogic/settings"):
+		settings = DialogicSettings.get_setting("dialogic/settings")
 
 	if dialogic.has_subsystem('Save'):
 		for i in settings:
@@ -81,8 +80,8 @@ func reset_all() -> void:
 
 
 func reset_setting(property: StringName) -> void:
-	if ProjectSettings.has_setting('dialogic/settings/'+property):
-		settings[property] = ProjectSettings.get_setting('dialogic/settings/'+property)
+	if DialogicSettings.has_setting('dialogic/settings/'+property):
+		settings[property] = DialogicSettings.get_setting('dialogic/settings/'+property)
 		_setting_changed(property, settings[property])
 	else:
 		settings.erase(property)

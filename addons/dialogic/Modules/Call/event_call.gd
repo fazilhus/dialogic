@@ -154,10 +154,10 @@ func get_method_suggestions(filter:="") -> Dictionary:
 
 func update_argument_info() -> void:
 	if autoload_name and method and not _current_method_arg_hints.is_empty() and (_current_method_arg_hints.a == autoload_name and _current_method_arg_hints.m == method):
-		if !ResourceLoader.exists(ProjectSettings.get_setting('autoload/'+autoload_name, '').trim_prefix('*')):
+		if !ResourceLoader.exists(DialogicSettings.get_setting('autoload/'+autoload_name, '').trim_prefix('*')):
 			_current_method_arg_hints = {}
 			return
-		var script: Script = load(ProjectSettings.get_setting('autoload/'+autoload_name, '').trim_prefix('*'))
+		var script: Script = load(DialogicSettings.get_setting('autoload/'+autoload_name, '').trim_prefix('*'))
 		for m in script.get_script_method_list():
 			if m.name == method:
 				_current_method_arg_hints = {'a':autoload_name, 'm':method, 'info':m}

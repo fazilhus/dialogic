@@ -247,7 +247,7 @@ func update_resource_list(resources_list: PackedStringArray = []) -> void:
 				func(x, y):
 					return x.get_slice("/", x.get_slice_count("/")-1) < y.get_slice("/", y.get_slice_count("/")-1)
 					)
-			var folder_colors: Dictionary = ProjectSettings.get_setting("file_customization/folder_colors", {})
+			var folder_colors: Dictionary = DialogicSettings.get_setting("file_customization/folder_colors", {})
 
 			for dir in sorted_dir_keys:
 				var display_name: String = dir
@@ -427,7 +427,7 @@ func _on_right_click_menu_id_pressed(id: int) -> void:
 			)
 		3:  # OPEN IN EXTERNAL EDITOR
 			OS.shell_open(
-				ProjectSettings.globalize_path(
+				DialogicSettings.globalize_path(
 					%RightClickMenu.get_meta("item_clicked").get_metadata(0)
 				)
 			)

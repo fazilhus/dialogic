@@ -224,7 +224,7 @@ func suggest_portraits(text:CodeEdit, character_name:String, end_check:=')') -> 
 
 # Helper that adds all variable paths as options
 func suggest_variables(text:CodeEdit):
-	for variable in DialogicUtil.list_variables(ProjectSettings.get_setting('dialogic/variables')):
+	for variable in DialogicUtil.list_variables(DialogicSettings.get_setting('dialogic/variables')):
 		text.add_code_completion_option(CodeEdit.KIND_MEMBER, variable, variable, syntax_highlighter.variable_color, text.get_theme_icon("MemberProperty", "EditorIcons"), '}')
 
 

@@ -91,8 +91,8 @@ func _execute() -> void:
 	_connect_signals()
 
 	var final_text: String = get_property_translated('text')
-	if ProjectSettings.get_setting('dialogic/text/split_at_new_lines', false):
-		match ProjectSettings.get_setting('dialogic/text/split_at_new_lines_as', 0):
+	if DialogicSettings.get_setting('dialogic/text/split_at_new_lines', false):
+		match DialogicSettings.get_setting('dialogic/text/split_at_new_lines_as', 0):
 			0:
 				final_text = final_text.replace('\n', '[n]')
 			1:
@@ -108,7 +108,7 @@ func _execute() -> void:
 	var reveal_next_segment: bool = dialogic.current_state_info['text_sub_idx'] == -1
 
 	for section_idx in range(min(max(0, dialogic.current_state_info['text_sub_idx']), len(split_text)-1), len(split_text)):
-		dialogic.Inputs.block_input(ProjectSettings.get_setting('dialogic/text/text_reveal_skip_delay', 0.1))
+		dialogic.Inputs.block_input(DialogicSettings.get_setting('dialogic/text/text_reveal_skip_delay', 0.1))
 
 		if reveal_next_segment:
 			dialogic.Text.hide_next_indicators()

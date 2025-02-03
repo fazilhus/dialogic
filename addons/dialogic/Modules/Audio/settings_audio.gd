@@ -12,21 +12,21 @@ func _ready() -> void:
 
 
 func _refresh() -> void:
-	%MusicChannelCount.value = ProjectSettings.get_setting(MUSIC_MAX_CHANNELS, 4)
+	%MusicChannelCount.value = DialogicSettings.get_setting(MUSIC_MAX_CHANNELS, 4)
 	%TypeSoundBus.clear()
 	var idx := 0
 	for i in range(AudioServer.bus_count):
 		%TypeSoundBus.add_item(AudioServer.get_bus_name(i))
-		if AudioServer.get_bus_name(i) == ProjectSettings.get_setting(TYPE_SOUND_AUDIO_BUS, ""):
+		if AudioServer.get_bus_name(i) == DialogicSettings.get_setting(TYPE_SOUND_AUDIO_BUS, ""):
 			idx = i
 	%TypeSoundBus.select(idx)
 
 
 func _on_music_channel_count_value_changed(value:float) -> void:
-	ProjectSettings.set_setting(MUSIC_MAX_CHANNELS, value)
-	ProjectSettings.save()
+	DialogicSettings.set_setting(MUSIC_MAX_CHANNELS, value)
+	DialogicSettings.save()
 
 
 func _on_type_sound_bus_item_selected(index:int) -> void:
-	ProjectSettings.set_setting(TYPE_SOUND_AUDIO_BUS, %TypeSoundBus.get_item_text(index))
-	ProjectSettings.save()
+	DialogicSettings.set_setting(TYPE_SOUND_AUDIO_BUS, %TypeSoundBus.get_item_text(index))
+	DialogicSettings.save()

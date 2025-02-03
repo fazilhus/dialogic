@@ -171,7 +171,7 @@ func allow_alt_text() -> bool:
 	return _has_condition and (
 		else_action == ElseActions.DISABLE or
 		(else_action == ElseActions.DEFAULT and
-		ProjectSettings.get_setting("dialogic/choices/def_false_behaviour", 0) == 1))
+		DialogicSettings.get_setting("dialogic/choices/def_false_behaviour", 0) == 1))
 #endregion
 
 

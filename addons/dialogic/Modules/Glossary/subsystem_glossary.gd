@@ -19,7 +19,7 @@ const SETTING_DEFAULT_COLOR := 'dialogic/glossary/default_color'
 func clear_game_state(_clear_flag := DialogicGameHandler.ClearFlags.FULL_CLEAR) -> void:
 	glossaries = []
 
-	for path: String in ProjectSettings.get_setting('dialogic/glossary/glossary_files', []):
+	for path: String in DialogicSettings.get_setting('dialogic/glossary/glossary_files', []):
 		add_glossary(path)
 
 #endregion
@@ -32,8 +32,8 @@ func parse_glossary(text: String) -> String:
 	if not enabled:
 		return text
 
-	var def_case_sensitive: bool = ProjectSettings.get_setting('dialogic/glossary/default_case_sensitive', true)
-	var def_color: Color = ProjectSettings.get_setting(SETTING_DEFAULT_COLOR, Color.POWDER_BLUE)
+	var def_case_sensitive: bool = DialogicSettings.get_setting('dialogic/glossary/default_case_sensitive', true)
+	var def_color: Color = DialogicSettings.get_setting(SETTING_DEFAULT_COLOR, Color.POWDER_BLUE)
 	var regex := RegEx.new()
 
 	for glossary: DialogicGlossary in glossaries:
@@ -126,7 +126,7 @@ func get_entry(entry_key: String) -> Dictionary:
 	if glossary == null:
 		return {}
 
-	var is_translation_enabled: bool = ProjectSettings.get_setting('dialogic/translation/enabled', false)
+	var is_translation_enabled: bool = DialogicSettings.get_setting('dialogic/translation/enabled', false)
 
 	var entry := glossary.get_entry(entry_key)
 
@@ -135,7 +135,7 @@ func get_entry(entry_key: String) -> Dictionary:
 
 	result.color = entry.get("color")
 	if result.color == null:
-		result.color = ProjectSettings.get_setting(SETTING_DEFAULT_COLOR, Color.POWDER_BLUE)
+		result.color = DialogicSettings.get_setting(SETTING_DEFAULT_COLOR, Color.POWDER_BLUE)
 
 	if is_translation_enabled and not glossary._translation_id.is_empty():
 		var translation_key: String = glossary._translation_keys.get(entry_key)

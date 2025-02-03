@@ -54,7 +54,7 @@ func clear_game_state(_clear_flag:=DialogicGameHandler.ClearFlags.FULL_CLEAR) ->
 	dialogic.current_state_info['speaker'] = ""
 	dialogic.current_state_info['text'] = ''
 
-	set_text_reveal_skippable(ProjectSettings.get_setting('dialogic/text/initial_text_reveal_skippable', true))
+	set_text_reveal_skippable(DialogicSettings.get_setting('dialogic/text/initial_text_reveal_skippable', true))
 
 	# TODO check whether this can happen on the node directly
 	for text_node in get_tree().get_nodes_in_group('dialogic_dialog_text'):
@@ -282,7 +282,7 @@ func update_text_speed(letter_speed: float = -1,
 		user_speed: float = dialogic.Settings.get_setting('text_speed', 1)) -> void:
 
 	if letter_speed == -1:
-		letter_speed = ProjectSettings.get_setting('dialogic/text/letter_speed', 0.01)
+		letter_speed = DialogicSettings.get_setting('dialogic/text/letter_speed', 0.01)
 
 	_pure_letter_speed = letter_speed
 	_letter_speed_absolute = absolute
@@ -400,7 +400,7 @@ func _ready() -> void:
 	dialogic.event_handled.connect(hide_next_indicators)
 
 	_autopauses = {}
-	var autopause_data: Dictionary = ProjectSettings.get_setting('dialogic/text/autopauses', {})
+	var autopause_data: Dictionary = DialogicSettings.get_setting('dialogic/text/autopauses', {})
 	for i in autopause_data.keys():
 		_autopauses[RegEx.create_from_string(r"(?<!(\[|\{))["+i+r"](?!([^{}\[\]]*[\]\}]|$))")] = autopause_data[i]
 
@@ -461,7 +461,7 @@ func emit_meta_signal(meta:Variant, sig:String) -> void:
 ################################################################################
 
 func color_character_names(text:String) -> String:
-	if not ProjectSettings.get_setting('dialogic/text/autocolor_names', false):
+	if not DialogicSettings.get_setting('dialogic/text/autocolor_names', false):
 		return text
 
 	collect_character_names()
@@ -477,7 +477,7 @@ func color_character_names(text:String) -> String:
 
 func collect_character_names() -> void:
 	#don't do this at all if we're not using autocolor names to begin with
-	if not ProjectSettings.get_setting("dialogic/text/autocolor_names", false):
+	if not DialogicSettings.get_setting("dialogic/text/autocolor_names", false):
 		return
 
 	character_colors = {}
@@ -594,7 +594,7 @@ func modifier_break(text:String) -> String:
 
 
 func modifier_autopauses(text:String) -> String:
-	var absolute: bool = ProjectSettings.get_setting('dialogic/text/absolute_autopauses', false)
+	var absolute: bool = DialogicSettings.get_setting('dialogic/text/absolute_autopauses', false)
 	for i in _autopauses.keys():
 		var offset := 0
 		for result in i.search_all(text):

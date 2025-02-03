@@ -1,9 +1,10 @@
 extends Control
 
 func _ready() -> void:
+	DialogicSettings.init()
 	print("[Dialogic] Testing scene was started.")
-	if not ProjectSettings.get_setting('internationalization/locale/test', "").is_empty():
-		print("Testing locale is: ", ProjectSettings.get_setting('internationalization/locale/test'))
+	if not DialogicSettings.get_setting('internationalization/locale/test', "").is_empty():
+		print("Testing locale is: ", DialogicSettings.get_setting('internationalization/locale/test'))
 	$PauseIndictator.hide()
 
 	var scene: Node = DialogicUtil.autoload().Styles.load_style(DialogicUtil.get_editor_setting('current_test_style', ''))

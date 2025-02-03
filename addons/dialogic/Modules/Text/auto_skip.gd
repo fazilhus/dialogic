@@ -38,7 +38,7 @@ var time_per_event: float = 0.1
 
 ## Setting up Auto-Skip.
 func _init() -> void:
-	time_per_event = ProjectSettings.get_setting('dialogic/text/autoskip_time_per_event', time_per_event)
+	time_per_event = DialogicSettings.get_setting('dialogic/text/autoskip_time_per_event', time_per_event)
 
 	if DialogicUtil.autoload().has_subsystem("History") and not DialogicUtil.autoload().History.visited_event.is_connected(_handle_seen_event):
 		DialogicUtil.autoload().History.visited_event.connect(_handle_seen_event)

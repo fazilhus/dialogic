@@ -58,27 +58,27 @@ func _ready() -> void:
 
 func _refresh() -> void:
 	## BEHAVIOUR
-	%DefaultSpeed.value = ProjectSettings.get_setting(_SETTING_LETTER_SPEED, 0.01)
+	%DefaultSpeed.value = DialogicSettings.get_setting(_SETTING_LETTER_SPEED, 0.01)
 
 	%InputAction.resource_icon = get_theme_icon(&"Mouse", &"EditorIcons")
-	%InputAction.set_value(ProjectSettings.get_setting(_SETTING_INPUT_ACTION, &'dialogic_default_action'))
+	%InputAction.set_value(DialogicSettings.get_setting(_SETTING_INPUT_ACTION, &'dialogic_default_action'))
 	%InputAction.get_suggestions_func = suggest_actions
 
-	%Skippable.button_pressed = ProjectSettings.get_setting(_SETTING_TEXT_REVEAL_SKIPPABLE, true)
-	%SkippableDelay.value = ProjectSettings.get_setting(_SETTING_TEXT_REVEAL_SKIPPABLE_DELAY, 0.1)
-	%AdvanceDelay.value = ProjectSettings.get_setting(_SETTING_TEXT_ADVANCE_DELAY, 0.1)
+	%Skippable.button_pressed = DialogicSettings.get_setting(_SETTING_TEXT_REVEAL_SKIPPABLE, true)
+	%SkippableDelay.value = DialogicSettings.get_setting(_SETTING_TEXT_REVEAL_SKIPPABLE_DELAY, 0.1)
+	%AdvanceDelay.value = DialogicSettings.get_setting(_SETTING_TEXT_ADVANCE_DELAY, 0.1)
 
-	%AutocolorNames.button_pressed = ProjectSettings.get_setting(_SETTING_AUTOCOLOR_NAMES, false)
+	%AutocolorNames.button_pressed = DialogicSettings.get_setting(_SETTING_AUTOCOLOR_NAMES, false)
 
-	%NewEvents.button_pressed = ProjectSettings.get_setting(_SETTING_SPLIT_AT_NEW_LINES, false)
-	%NewEventOption.select(ProjectSettings.get_setting(_SETTING_SPLIT_AT_NEW_LINES_AS, 0))
+	%NewEvents.button_pressed = DialogicSettings.get_setting(_SETTING_SPLIT_AT_NEW_LINES, false)
+	%NewEventOption.select(DialogicSettings.get_setting(_SETTING_SPLIT_AT_NEW_LINES_AS, 0))
 
 	## AUTO-ADVANCE
-	%AutoAdvance.button_pressed = ProjectSettings.get_setting(_SETTING_AUTOADVANCE_ENABLED, false)
-	%FixedDelay.value = ProjectSettings.get_setting(_SETTING_AUTOADVANCE_FIXED_DELAY, 1)
+	%AutoAdvance.button_pressed = DialogicSettings.get_setting(_SETTING_AUTOADVANCE_ENABLED, false)
+	%FixedDelay.value = DialogicSettings.get_setting(_SETTING_AUTOADVANCE_FIXED_DELAY, 1)
 
-	var per_character_delay: float = ProjectSettings.get_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, 0.1)
-	var per_word_delay: float = ProjectSettings.get_setting(_SETTING_AUTOADVANCE_WORD_DELAY, 0)
+	var per_character_delay: float = DialogicSettings.get_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, 0.1)
+	var per_word_delay: float = DialogicSettings.get_setting(_SETTING_AUTOADVANCE_WORD_DELAY, 0)
 	if per_character_delay == 0 and per_word_delay == 0:
 		_on_additional_delay_mode_item_selected(0)
 	elif per_word_delay == 0:
@@ -86,19 +86,19 @@ func _refresh() -> void:
 	else:
 		_on_additional_delay_mode_item_selected(1, per_word_delay)
 
-	%IgnoredCharactersEnabled.button_pressed = ProjectSettings.get_setting(_SETTING_AUTOADVANCE_IGNORED_CHARACTERS_ENABLED, true)
+	%IgnoredCharactersEnabled.button_pressed = DialogicSettings.get_setting(_SETTING_AUTOADVANCE_IGNORED_CHARACTERS_ENABLED, true)
 	var ignored_characters: String = ''
-	var ignored_characters_dict: Dictionary = ProjectSettings.get_setting(_SETTING_AUTOADVANCE_IGNORED_CHARACTERS, {})
+	var ignored_characters_dict: Dictionary = DialogicSettings.get_setting(_SETTING_AUTOADVANCE_IGNORED_CHARACTERS, {})
 	for ignored_character in ignored_characters_dict.keys():
 		ignored_characters += ignored_character
 	%IgnoredCharacters.text = ignored_characters
 
 	## AUTO-SKIP
-	%AutoskipTimePerEvent.value = ProjectSettings.get_setting(_SETTING_AUTOSKIP_TIME_PER_EVENT, 0.1)
+	%AutoskipTimePerEvent.value = DialogicSettings.get_setting(_SETTING_AUTOSKIP_TIME_PER_EVENT, 0.1)
 
 	## AUTO-PAUSES
-	%AutoPausesAbsolute.button_pressed = ProjectSettings.get_setting(_SETTING_ABSOLUTE_AUTOPAUSES, false)
-	load_autopauses(ProjectSettings.get_setting(_SETTING_AUTOPAUSES, {}))
+	%AutoPausesAbsolute.button_pressed = DialogicSettings.get_setting(_SETTING_ABSOLUTE_AUTOPAUSES, false)
+	load_autopauses(DialogicSettings.get_setting(_SETTING_AUTOPAUSES, {}))
 
 
 func _about_to_close() -> void:
@@ -106,21 +106,21 @@ func _about_to_close() -> void:
 
 
 func _on_bool_set(button_pressed:bool, setting:String) -> void:
-	ProjectSettings.set_setting(setting, button_pressed)
-	ProjectSettings.save()
+	DialogicSettings.set_setting(setting, button_pressed)
+	DialogicSettings.save()
 
 
 func _on_float_set(value:float, setting:String) -> void:
-	ProjectSettings.set_setting(setting, value)
-	ProjectSettings.save()
+	DialogicSettings.set_setting(setting, value)
+	DialogicSettings.save()
 
 
 #region BEHAVIOUR
 ################################################################################
 
 func _on_InputAction_value_changed(property_name:String, value:String) -> void:
-	ProjectSettings.set_setting(_SETTING_INPUT_ACTION, value)
-	ProjectSettings.save()
+	DialogicSettings.set_setting(_SETTING_INPUT_ACTION, value)
+	DialogicSettings.save()
 
 func suggest_actions(search:String) -> Dictionary:
 	var suggs := {}
@@ -131,8 +131,8 @@ func suggest_actions(search:String) -> Dictionary:
 
 
 func _on_new_event_option_item_selected(index:int) -> void:
-	ProjectSettings.set_setting(_SETTING_SPLIT_AT_NEW_LINES_AS, index)
-	ProjectSettings.save()
+	DialogicSettings.set_setting(_SETTING_SPLIT_AT_NEW_LINES_AS, index)
+	DialogicSettings.save()
 
 #endregion
 
@@ -145,42 +145,42 @@ func _on_additional_delay_mode_item_selected(index:int, delay:float=-1) -> void:
 		0: # NONE
 			%AdditionalDelay.hide()
 			%AutoadvanceIgnoreCharacters.hide()
-			ProjectSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, 0)
-			ProjectSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, 0)
+			DialogicSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, 0)
+			DialogicSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, 0)
 		1: # PER WORD
 			%AdditionalDelay.show()
 			%AutoadvanceIgnoreCharacters.hide()
 			if delay != -1:
 				%AdditionalDelay.value = delay
 			else:
-				ProjectSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, %AdditionalDelay.value)
-				ProjectSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, 0)
+				DialogicSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, %AdditionalDelay.value)
+				DialogicSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, 0)
 		2: # PER CHARACTER
 			%AdditionalDelay.show()
 			%AutoadvanceIgnoreCharacters.show()
 			if delay != -1:
 				%AdditionalDelay.value = delay
 			else:
-				ProjectSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, %AdditionalDelay.value)
-				ProjectSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, 0)
-	ProjectSettings.save()
+				DialogicSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, %AdditionalDelay.value)
+				DialogicSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, 0)
+	DialogicSettings.save()
 
 
 func _on_additional_delay_value_changed(value:float) -> void:
 	match %AdditionalDelayMode.selected:
 		0: # NONE
-			ProjectSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, 0)
-			ProjectSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, 0)
+			DialogicSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, 0)
+			DialogicSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, 0)
 		1: # PER WORD
-			ProjectSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, value)
+			DialogicSettings.set_setting(_SETTING_AUTOADVANCE_WORD_DELAY, value)
 		2: # PER CHARACTER
-			ProjectSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, value)
-	ProjectSettings.save()
+			DialogicSettings.set_setting(_SETTING_AUTOADVANCE_CHARACTER_DELAY, value)
+	DialogicSettings.save()
 
 
 func _on_IgnoredCharacters_text_changed(text_input):
-	ProjectSettings.set_setting(_SETTING_AUTOADVANCE_IGNORED_CHARACTERS, DialogicUtil.str_to_hash_set(text_input))
-	ProjectSettings.save()
+	DialogicSettings.set_setting(_SETTING_AUTOADVANCE_IGNORED_CHARACTERS, DialogicUtil.str_to_hash_set(text_input))
+	DialogicSettings.save()
 
 #endregion
 
@@ -202,8 +202,8 @@ func save_autopauses() -> void:
 	for i in autopause_sets:
 		if is_instance_valid(autopause_sets[i].time):
 			dictionary[autopause_sets[i].text.text] = autopause_sets[i].time.value
-	ProjectSettings.set_setting(_SETTING_AUTOPAUSES, dictionary)
-	ProjectSettings.save()
+	DialogicSettings.set_setting(_SETTING_AUTOPAUSES, dictionary)
+	DialogicSettings.save()
 
 
 func _on_add_autopauses_set_pressed() -> void:

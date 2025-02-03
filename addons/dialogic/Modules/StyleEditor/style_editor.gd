@@ -54,7 +54,7 @@ func collect_styles() -> void:
 		for layout in indexer._get_layout_parts():
 			premade_style_parts[layout['path']] = layout
 
-	var style_list: Array = ProjectSettings.get_setting('dialogic/layout/style_list', [])
+	var style_list: Array = DialogicSettings.get_setting('dialogic/layout/style_list', [])
 	for style in style_list:
 		if ResourceLoader.exists(style):
 			if style != null:
@@ -64,13 +64,13 @@ func collect_styles() -> void:
 		else:
 			print("[Dialogic] Failed to open style '", style, "'. Might have been moved or deleted.")
 
-	default_style = ProjectSettings.get_setting('dialogic/layout/default_style', 'Default')
+	default_style = DialogicSettings.get_setting('dialogic/layout/default_style', 'Default')
 
 
 func save_style_list() -> void:
-	ProjectSettings.set_setting('dialogic/layout/style_list', styles.map(func(style:DialogicStyle): return style.resource_path))
-	ProjectSettings.set_setting('dialogic/layout/default_style', default_style)
-	ProjectSettings.save()
+	DialogicSettings.set_setting('dialogic/layout/style_list', styles.map(func(style:DialogicStyle): return style.resource_path))
+	DialogicSettings.set_setting('dialogic/layout/default_style', default_style)
+	DialogicSettings.save()
 
 
 func save_style() -> void:

@@ -316,7 +316,7 @@ func load_event_settings(event:DialogicEvent) -> void:
 	for child in %EventDefaults.get_children():
 		child.queue_free()
 
-	var event_default_overrides: Dictionary = ProjectSettings.get_setting('dialogic/event_default_overrides', {})
+	var event_default_overrides: Dictionary = DialogicSettings.get_setting('dialogic/event_default_overrides', {})
 
 	var params := event.get_shortcode_parameters()
 	for prop in params:
@@ -390,7 +390,7 @@ func load_event_settings(event:DialogicEvent) -> void:
 
 
 func set_event_default_override(prop:String, value:Variant) -> void:
-	var event_default_overrides: Dictionary = ProjectSettings.get_setting('dialogic/event_default_overrides', {})
+	var event_default_overrides: Dictionary = DialogicSettings.get_setting('dialogic/event_default_overrides', {})
 	var event: DialogicEvent = %Tree.get_selected().get_metadata(0).event
 
 	if not event_default_overrides.has(event.event_name):
@@ -398,11 +398,11 @@ func set_event_default_override(prop:String, value:Variant) -> void:
 
 	event_default_overrides[event.event_name][prop] = value
 
-	ProjectSettings.set_setting('dialogic/event_default_overrides', event_default_overrides)
+	DialogicSettings.set_setting('dialogic/event_default_overrides', event_default_overrides)
 
 
 func reset_event_default_override(prop:String, node:Node, default:Variant) -> void:
-	var event_default_overrides: Dictionary = ProjectSettings.get_setting('dialogic/event_default_overrides', {})
+	var event_default_overrides: Dictionary = DialogicSettings.get_setting('dialogic/event_default_overrides', {})
 	var event: DialogicEvent = %Tree.get_selected().get_metadata(0).event
 
 	if not event_default_overrides.has(event.event_name):
@@ -410,7 +410,7 @@ func reset_event_default_override(prop:String, node:Node, default:Variant) -> vo
 
 	event_default_overrides[event.event_name].erase(prop)
 
-	ProjectSettings.set_setting('dialogic/event_default_overrides', event_default_overrides)
+	DialogicSettings.set_setting('dialogic/event_default_overrides', event_default_overrides)
 
 	if node is CheckBox:
 		node.button_pressed = default

@@ -29,26 +29,26 @@ func _ready() -> void:
 
 func _refresh() -> void:
 	%PhysicsTimerButton.button_pressed = DialogicUtil.is_physics_timer()
-	%LayoutNodeEndBehaviour.select(ProjectSettings.get_setting('dialogic/layout/end_behaviour', 0))
-	%ExtensionsFolderPicker.set_value(ProjectSettings.get_setting('dialogic/extensions_folder', 'res://addons/dialogic_additions'))
+	%LayoutNodeEndBehaviour.select(DialogicSettings.get_setting('dialogic/layout/end_behaviour', 0))
+	%ExtensionsFolderPicker.set_value(DialogicSettings.get_setting('dialogic/extensions_folder', 'res://addons/dialogic_additions'))
 
 
 
 func _on_physics_timer_button_toggled(is_toggled: bool) -> void:
-	ProjectSettings.set_setting('dialogic/timer/process_in_physics', is_toggled)
-	ProjectSettings.save()
+	DialogicSettings.set_setting('dialogic/timer/process_in_physics', is_toggled)
+	DialogicSettings.save()
 
 
 func _on_ExtensionsFolder_value_changed(property:String, value:String) -> void:
 	if value == null or value.is_empty():
 		value = 'res://addons/dialogic_additions'
-	ProjectSettings.set_setting('dialogic/extensions_folder', value)
-	ProjectSettings.save()
+	DialogicSettings.set_setting('dialogic/extensions_folder', value)
+	DialogicSettings.save()
 
 
 func _on_layout_node_end_behaviour_item_selected(index:int) -> void:
-	ProjectSettings.set_setting('dialogic/layout/end_behaviour', index)
-	ProjectSettings.save()
+	DialogicSettings.set_setting('dialogic/layout/end_behaviour', index)
+	DialogicSettings.save()
 
 
 ################################################################################
@@ -67,7 +67,7 @@ func _on_submit_extension_button_pressed() -> void:
 	if %NameEdit.text.is_empty():
 		return
 
-	var extensions_folder: String = ProjectSettings.get_setting('dialogic/extensions_folder', 'res://addons/dialogic_additions')
+	var extensions_folder: String = DialogicSettings.get_setting('dialogic/extensions_folder', 'res://addons/dialogic_additions')
 
 	extensions_folder = extensions_folder.path_join(%NameEdit.text.to_pascal_case())
 	DirAccess.make_dir_recursive_absolute(extensions_folder)

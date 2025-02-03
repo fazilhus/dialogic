@@ -50,17 +50,17 @@ func _ready() -> void:
 
 
 func set_setting(value: Variant, setting: String)  -> void:
-	ProjectSettings.set_setting(setting, value)
-	ProjectSettings.save()
+	DialogicSettings.set_setting(setting, value)
+	DialogicSettings.save()
 
 
 func _open(_argument: Variant = null) -> void:
-	%DefaultColor.color = ProjectSettings.get_setting('dialogic/glossary/default_color', Color.POWDER_BLUE)
-	%DefaultCaseSensitive.button_pressed = ProjectSettings.get_setting('dialogic/glossary/default_case_sensitive', true)
+	%DefaultColor.color = DialogicSettings.get_setting('dialogic/glossary/default_color', Color.POWDER_BLUE)
+	%DefaultCaseSensitive.button_pressed = DialogicSettings.get_setting('dialogic/glossary/default_case_sensitive', true)
 
 	%GlossaryList.clear()
 	var idx := 0
-	for file: String in ProjectSettings.get_setting('dialogic/glossary/glossary_files', []):
+	for file: String in DialogicSettings.get_setting('dialogic/glossary/glossary_files', []):
 
 		if ResourceLoader.exists(file):
 			%GlossaryList.add_item(DialogicUtil.pretty_name(file), get_theme_icon('FileList', 'EditorIcons'))
@@ -144,12 +144,12 @@ func _on_load_glossary_file_pressed() -> void:
 
 
 func load_glossary_file(path:String) -> void:
-	var list: Array = ProjectSettings.get_setting('dialogic/glossary/glossary_files', [])
+	var list: Array = DialogicSettings.get_setting('dialogic/glossary/glossary_files', [])
 
 	if not path in list:
 		list.append(path)
-		ProjectSettings.set_setting('dialogic/glossary/glossary_files', list)
-		ProjectSettings.save()
+		DialogicSettings.set_setting('dialogic/glossary/glossary_files', list)
+		DialogicSettings.save()
 		%GlossaryList.add_item(DialogicUtil.pretty_name(path), get_theme_icon('FileList', 'EditorIcons'))
 
 		var selected_item_index: int = %GlossaryList.item_count - 1
@@ -163,12 +163,12 @@ func _on_delete_glossary_file_pressed() -> void:
 	var selected_items: PackedInt32Array = %GlossaryList.get_selected_items()
 
 	if not selected_items.is_empty():
-		var list: Array = ProjectSettings.get_setting('dialogic/glossary/glossary_files', [])
+		var list: Array = DialogicSettings.get_setting('dialogic/glossary/glossary_files', [])
 		var selected_item_index := selected_items[0]
 		list.remove_at(selected_item_index)
 
-		ProjectSettings.set_setting('dialogic/glossary/glossary_files', list)
-		ProjectSettings.save()
+		DialogicSettings.set_setting('dialogic/glossary/glossary_files', list)
+		DialogicSettings.save()
 
 		_open()
 

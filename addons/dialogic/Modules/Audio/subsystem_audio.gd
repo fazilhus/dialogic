@@ -35,11 +35,11 @@ var max_channels: int:
 	set(value):
 		if max_channels != value:
 			max_channels = value
-			ProjectSettings.set_setting('dialogic/audio/max_channels', value)
-			ProjectSettings.save()
+			DialogicSettings.set_setting('dialogic/audio/max_channels', value)
+			DialogicSettings.save()
 			current_music_player.resize(value)
 	get:
-		return ProjectSettings.get_setting('dialogic/audio/max_channels', 4)
+		return DialogicSettings.get_setting('dialogic/audio/max_channels', 4)
 
 ## Audio player base duplicated to play background music.
 ##

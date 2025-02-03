@@ -34,7 +34,7 @@ func clear_game_state(clear_flag:=DialogicGameHandler.ClearFlags.FULL_CLEAR):
 func load_game_state(load_flag:=LoadFlags.FULL_LOAD):
 	if load_flag == LoadFlags.ONLY_DNODES:
 		return
-	dialogic.current_state_info['variables'] = merge_folder(dialogic.current_state_info['variables'], ProjectSettings.get_setting('dialogic/variables', {}).duplicate(true))
+	dialogic.current_state_info['variables'] = merge_folder(dialogic.current_state_info['variables'], DialogicSettings.get_setting('dialogic/variables', {}).duplicate(true))
 
 #endregion
 
@@ -151,9 +151,9 @@ func get_variable(variable_path:String, default: Variant = null, no_warning := f
 ## Resets all variables or a specific variable to the value(s) defined in the variable editor
 func reset(variable:="") -> void:
 	if variable.is_empty():
-		dialogic.current_state_info['variables'] = ProjectSettings.get_setting("dialogic/variables", {}).duplicate(true)
+		dialogic.current_state_info['variables'] = DialogicSettings.get_setting("dialogic/variables", {}).duplicate(true)
 	else:
-		DialogicUtil._set_value_in_dictionary(variable, dialogic.current_state_info['variables'], DialogicUtil._get_value_in_dictionary(variable, ProjectSettings.get_setting('dialogic/variables', {})))
+		DialogicUtil._set_value_in_dictionary(variable, dialogic.current_state_info['variables'], DialogicUtil._get_value_in_dictionary(variable, DialogicSettings.get_setting('dialogic/variables', {})))
 
 
 ## Returns true if a variable with the given path exists

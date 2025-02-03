@@ -161,7 +161,7 @@ func try_add_entry(entry: Dictionary) -> bool:
 func _get_word_options(entry_key: String) -> Array:
 	var word_options: Array = []
 
-	var translation_enabled: bool = ProjectSettings.get_setting("dialogic/translation/enabled", false)
+	var translation_enabled: bool = DialogicSettings.get_setting("dialogic/translation/enabled", false)
 
 	if not translation_enabled:
 		word_options.append(entry_key)

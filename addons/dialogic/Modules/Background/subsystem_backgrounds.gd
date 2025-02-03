@@ -167,7 +167,7 @@ func add_background_node(scene:PackedScene, parent:DialogicNode_BackgroundHolder
 	viewport.transparent_bg = true
 	viewport.disable_3d = true
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
-	viewport.canvas_item_default_texture_filter = ProjectSettings.get_setting("rendering/textures/canvas_textures/default_texture_filter")
+	viewport.canvas_item_default_texture_filter = DialogicSettings.get_setting("rendering/textures/canvas_textures/default_texture_filter")
 
 	viewport.add_child(b_scene)
 	b_scene.viewport = viewport

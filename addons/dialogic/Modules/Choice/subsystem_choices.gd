@@ -49,12 +49,12 @@ func _ready() -> void:
 	DialogicUtil.update_timer_process_callback(_choice_blocker)
 	add_child(_choice_blocker)
 
-	reveal_delay = float(ProjectSettings.get_setting('dialogic/choices/reveal_delay', reveal_delay))
-	reveal_by_input = ProjectSettings.get_setting('dialogic/choices/reveal_by_input', reveal_by_input)
-	block_delay = ProjectSettings.get_setting('dialogic/choices/delay', block_delay)
-	autofocus_first_choice = ProjectSettings.get_setting('dialogic/choices/autofocus_first', autofocus_first_choice)
-	hotkey_behaviour = ProjectSettings.get_setting('dialogic/choices/hotkey_behaviour', hotkey_behaviour)
-	default_false_behaviour = ProjectSettings.get_setting('dialogic/choices/def_false_behaviour', default_false_behaviour)
+	reveal_delay = float(DialogicSettings.get_setting('dialogic/choices/reveal_delay', reveal_delay))
+	reveal_by_input = DialogicSettings.get_setting('dialogic/choices/reveal_by_input', reveal_by_input)
+	block_delay = DialogicSettings.get_setting('dialogic/choices/delay', block_delay)
+	autofocus_first_choice = DialogicSettings.get_setting('dialogic/choices/autofocus_first', autofocus_first_choice)
+	hotkey_behaviour = DialogicSettings.get_setting('dialogic/choices/hotkey_behaviour', hotkey_behaviour)
+	default_false_behaviour = DialogicSettings.get_setting('dialogic/choices/def_false_behaviour', default_false_behaviour)
 
 
 func post_install() -> void:

@@ -71,13 +71,13 @@ func _on_custom_action(action: String) -> void:
 func _refresh() -> void:
 	loading = true
 
-	%TransEnabled.button_pressed = ProjectSettings.get_setting('dialogic/translation/enabled', false)
+	%TransEnabled.button_pressed = DialogicSettings.get_setting('dialogic/translation/enabled', false)
 	%TranslationSettings.visible = %TransEnabled.button_pressed
-	%OrigLocale.set_value(ProjectSettings.get_setting('dialogic/translation/original_locale', TranslationServer.get_tool_locale()))
-	%TransMode.select(ProjectSettings.get_setting('dialogic/translation/file_mode', 1))
-	%TransFolderPicker.set_value(ProjectSettings.get_setting('dialogic/translation/translation_folder', ''))
-	%TestingLocale.set_value(ProjectSettings.get_setting('internationalization/locale/test', ''))
-	%AddSeparatorEnabled.button_pressed = ProjectSettings.get_setting('dialogic/translation/add_separator', false)
+	%OrigLocale.set_value(DialogicSettings.get_setting('dialogic/translation/original_locale', TranslationServer.get_tool_locale()))
+	%TransMode.select(DialogicSettings.get_setting('dialogic/translation/file_mode', 1))
+	%TransFolderPicker.set_value(DialogicSettings.get_setting('dialogic/translation/translation_folder', ''))
+	%TestingLocale.set_value(DialogicSettings.get_setting('internationalization/locale/test', ''))
+	%AddSeparatorEnabled.button_pressed = DialogicSettings.get_setting('dialogic/translation/add_separator', false)
 
 	_verify_translation_file()
 
@@ -90,15 +90,15 @@ func store_changes(_fake_arg: Variant = null, _fake_arg2: Variant = null) -> voi
 
 	_verify_translation_file()
 
-	ProjectSettings.set_setting('dialogic/translation/enabled', %TransEnabled.button_pressed)
+	DialogicSettings.set_setting('dialogic/translation/enabled', %TransEnabled.button_pressed)
 	%TranslationSettings.visible = %TransEnabled.button_pressed
-	ProjectSettings.set_setting('dialogic/translation/original_locale', %OrigLocale.current_value)
-	ProjectSettings.set_setting('dialogic/translation/file_mode', %TransMode.selected)
-	ProjectSettings.set_setting('dialogic/translation/translation_folder', %TransFolderPicker.current_value)
-	ProjectSettings.set_setting('internationalization/locale/test', %TestingLocale.current_value)
-	ProjectSettings.set_setting('dialogic/translation/save_mode', %SaveLocationMode.selected)
-	ProjectSettings.set_setting('dialogic/translation/add_separator', %AddSeparatorEnabled.button_pressed)
-	ProjectSettings.save()
+	DialogicSettings.set_setting('dialogic/translation/original_locale', %OrigLocale.current_value)
+	DialogicSettings.set_setting('dialogic/translation/file_mode', %TransMode.selected)
+	DialogicSettings.set_setting('dialogic/translation/translation_folder', %TransFolderPicker.current_value)
+	DialogicSettings.set_setting('internationalization/locale/test', %TestingLocale.current_value)
+	DialogicSettings.set_setting('dialogic/translation/save_mode', %SaveLocationMode.selected)
+	DialogicSettings.set_setting('dialogic/translation/add_separator', %AddSeparatorEnabled.button_pressed)
+	DialogicSettings.save()
 
 
 ## Checks whether the translation folder path is required.
@@ -139,7 +139,7 @@ func get_locales(_filter: String) -> Dictionary:
 	suggestions['Default'] = {'value':'', 'tooltip':"Will use the fallback locale set in the project settings."}
 	suggestions[TranslationServer.get_tool_locale()] = {'value':TranslationServer.get_tool_locale()}
 
-	var used_locales: Array = ProjectSettings.get_setting(_USED_LOCALES_SETTING, TranslationServer.get_all_languages())
+	var used_locales: Array = DialogicSettings.get_setting(_USED_LOCALES_SETTING, TranslationServer.get_all_languages())
 
 	for locale: String in used_locales:
 		var language_name := TranslationServer.get_language_name(locale)
@@ -158,9 +158,9 @@ func _on_update_translations_pressed() -> void:
 	var file_mode: TranslationModes = %TransMode.selected
 	var translation_folder: String = %TransFolderPicker.current_value
 
-	var old_save_mode: SaveLocationModes = ProjectSettings.get_setting('dialogic/translation/intern/save_mode', save_mode)
-	var old_file_mode: TranslationModes = ProjectSettings.get_setting('dialogic/translation/intern/file_mode', file_mode)
-	var old_translation_folder: String = ProjectSettings.get_setting('dialogic/translation/intern/translation_folder', translation_folder)
+	var old_save_mode: SaveLocationModes = DialogicSettings.get_setting('dialogic/translation/intern/save_mode', save_mode)
+	var old_file_mode: TranslationModes = DialogicSettings.get_setting('dialogic/translation/intern/file_mode', file_mode)
+	var old_translation_folder: String = DialogicSettings.get_setting('dialogic/translation/intern/translation_folder', translation_folder)
 
 	if (old_save_mode == save_mode
 	and old_file_mode == file_mode
@@ -186,8 +186,8 @@ func _handle_glossary_translation(
 	orig_locale: String) -> void:
 
 	var glossary_csv: DialogicCsvFile = null
-	var glossary_paths: Array = ProjectSettings.get_setting('dialogic/glossary/glossary_files', [])
-	var add_separator_lines: bool = ProjectSettings.get_setting('dialogic/translation/add_separator', false)
+	var glossary_paths: Array = DialogicSettings.get_setting('dialogic/glossary/glossary_files', [])
+	var add_separator_lines: bool = DialogicSettings.get_setting('dialogic/translation/add_separator', false)
 
 	for glossary_path: String in glossary_paths:
 
@@ -260,20 +260,20 @@ class CsvUpdateData:
 
 func update_csv_files() -> void:
 	_unique_locales = []
-	var orig_locale: String = ProjectSettings.get_setting('dialogic/translation/original_locale', '').strip_edges()
-	var save_location_mode: SaveLocationModes = ProjectSettings.get_setting('dialogic/translation/save_mode', SaveLocationModes.NEXT_TO_TIMELINE)
-	var translation_mode: TranslationModes = ProjectSettings.get_setting('dialogic/translation/file_mode', TranslationModes.PER_PROJECT)
-	var translation_folder_path: String = ProjectSettings.get_setting('dialogic/translation/translation_folder', 'res://')
-	var add_separator_lines: bool = ProjectSettings.get_setting('dialogic/translation/add_separator', false)
+	var orig_locale: String = DialogicSettings.get_setting('dialogic/translation/original_locale', '').strip_edges()
+	var save_location_mode: SaveLocationModes = DialogicSettings.get_setting('dialogic/translation/save_mode', SaveLocationModes.NEXT_TO_TIMELINE)
+	var translation_mode: TranslationModes = DialogicSettings.get_setting('dialogic/translation/file_mode', TranslationModes.PER_PROJECT)
+	var translation_folder_path: String = DialogicSettings.get_setting('dialogic/translation/translation_folder', 'res://')
+	var add_separator_lines: bool = DialogicSettings.get_setting('dialogic/translation/add_separator', false)
 
 	var csv_data := CsvUpdateData.new()
 
 	if orig_locale.is_empty():
-		orig_locale = ProjectSettings.get_setting('internationalization/locale/fallback')
+		orig_locale = DialogicSettings.get_setting('internationalization/locale/fallback')
 
-	ProjectSettings.set_setting('dialogic/translation/intern/save_mode', save_location_mode)
-	ProjectSettings.set_setting('dialogic/translation/intern/file_mode', translation_mode)
-	ProjectSettings.set_setting('dialogic/translation/intern/translation_folder', translation_folder_path)
+	DialogicSettings.set_setting('dialogic/translation/intern/save_mode', save_location_mode)
+	DialogicSettings.set_setting('dialogic/translation/intern/file_mode', translation_mode)
+	DialogicSettings.set_setting('dialogic/translation/intern/translation_folder', translation_folder_path)
 
 	var current_timeline := _close_active_timeline()
 
@@ -375,7 +375,7 @@ func update_csv_files() -> void:
 	}
 
 	%StatusMessage.text = status_message.format(status_message_args)
-	ProjectSettings.set_setting(_USED_LOCALES_SETTING, _unique_locales)
+	DialogicSettings.set_setting(_USED_LOCALES_SETTING, _unique_locales)
 
 
 ## Iterates over all character resource files and creates or updates CSV files
@@ -414,7 +414,7 @@ func _handle_character_names(
 
 func collect_translations() -> void:
 	var translation_files := []
-	var translation_mode: TranslationModes = ProjectSettings.get_setting('dialogic/translation/file_mode', TranslationModes.PER_PROJECT)
+	var translation_mode: TranslationModes = DialogicSettings.get_setting('dialogic/translation/file_mode', TranslationModes.PER_PROJECT)
 
 	if translation_mode == TranslationModes.PER_TIMELINE:
 
@@ -429,7 +429,7 @@ func collect_translations() -> void:
 						translation_files.append(file)
 
 	if translation_mode == TranslationModes.PER_PROJECT:
-		var translation_folder: String = ProjectSettings.get_setting('dialogic/translation/translation_folder', 'res://')
+		var translation_folder: String = DialogicSettings.get_setting('dialogic/translation/translation_folder', 'res://')
 
 		for file: String in DialogicUtil.listdir(translation_folder):
 			file = translation_folder.path_join(file)
@@ -439,7 +439,7 @@ func collect_translations() -> void:
 				if not file in translation_files:
 					translation_files.append(file)
 
-	var all_translation_files: Array = ProjectSettings.get_setting('internationalization/locale/translations', [])
+	var all_translation_files: Array = DialogicSettings.get_setting('internationalization/locale/translations', [])
 	var orig_file_amount := len(all_translation_files)
 
 	# This array keeps track of valid translation file paths.
@@ -463,8 +463,8 @@ func collect_translations() -> void:
 
 
 	var valid_translation_files := PackedStringArray(all_translation_files)
-	ProjectSettings.set_setting('internationalization/locale/translations', valid_translation_files)
-	ProjectSettings.save()
+	DialogicSettings.set_setting('internationalization/locale/translations', valid_translation_files)
+	DialogicSettings.save()
 
 	%StatusMessage.text = (
 		"Added translation files: " + str(len(all_translation_files)-orig_file_amount)
@@ -510,9 +510,9 @@ func delete_translations_files(translation_files: Array, csv_name: String) -> in
 ## translation IDs.
 ## Deletes the Per-Project CSV file and the character name CSV file.
 func erase_translations() -> void:
-	var files: PackedStringArray = ProjectSettings.get_setting('internationalization/locale/translations', [])
+	var files: PackedStringArray = DialogicSettings.get_setting('internationalization/locale/translations', [])
 	var translation_files := Array(files)
-	ProjectSettings.set_setting(_USED_LOCALES_SETTING, [])
+	DialogicSettings.set_setting(_USED_LOCALES_SETTING, [])
 
 	var deleted_csv_files := 0
 	var deleted_translation_files := 0
@@ -571,9 +571,9 @@ func erase_translations() -> void:
 	_erase_glossary_translation_ids()
 	_erase_character_name_translation_ids()
 
-	ProjectSettings.set_setting('dialogic/translation/id_counter', 16)
-	ProjectSettings.set_setting('internationalization/locale/translations', PackedStringArray(translation_files))
-	ProjectSettings.save()
+	DialogicSettings.set_setting('dialogic/translation/id_counter', 16)
+	DialogicSettings.set_setting('internationalization/locale/translations', PackedStringArray(translation_files))
+	DialogicSettings.save()
 
 	find_parent('EditorView').plugin_reference.get_editor_interface().get_resource_filesystem().scan_sources()
 
@@ -600,9 +600,9 @@ func erase_translations() -> void:
 	find_parent('EditorView').plugin_reference.get_editor_interface().get_resource_filesystem().scan_sources()
 
 	# Clear the internal settings.
-	ProjectSettings.clear('dialogic/translation/intern/save_mode')
-	ProjectSettings.clear('dialogic/translation/intern/file_mode')
-	ProjectSettings.clear('dialogic/translation/intern/translation_folder')
+	DialogicSettings.clear('dialogic/translation/intern/save_mode')
+	DialogicSettings.clear('dialogic/translation/intern/file_mode')
+	DialogicSettings.clear('dialogic/translation/intern/translation_folder')
 
 	_verify_translation_file()
 	%StatusMessage.text = status_message.format(status_message_args)
@@ -610,7 +610,7 @@ func erase_translations() -> void:
 
 func _erase_glossary_translation_ids() -> void:
 	# Clean glossary.
-	var glossary_paths: Array = ProjectSettings.get_setting('dialogic/glossary/glossary_files', [])
+	var glossary_paths: Array = DialogicSettings.get_setting('dialogic/glossary/glossary_files', [])
 
 	for glossary_path: String in glossary_paths:
 		var glossary: DialogicGlossary = load(glossary_path)

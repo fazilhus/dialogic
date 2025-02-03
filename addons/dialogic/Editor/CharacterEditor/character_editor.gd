@@ -81,8 +81,8 @@ func _open_resource(resource:Resource) -> void:
 
 ## Called when the character is opened.
 func _open(extra_info:Variant="") -> void:
-	if !ProjectSettings.get_setting('dialogic/portraits/default_portrait', '').is_empty():
-		def_portrait_path = ProjectSettings.get_setting('dialogic/portraits/default_portrait', '')
+	if !DialogicSettings.get_setting('dialogic/portraits/default_portrait', '').is_empty():
+		def_portrait_path = DialogicSettings.get_setting('dialogic/portraits/default_portrait', '')
 	else:
 		def_portrait_path = DialogicUtil.get_module_path('Character').path_join('default_portrait.tscn')
 

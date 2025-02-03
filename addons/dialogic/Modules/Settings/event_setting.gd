@@ -194,16 +194,15 @@ func build_event_editor() -> void:
 func get_settings_suggestions(filter:String) -> Dictionary:
 	var suggestions := {filter:{'value':filter, 'editor_icon':["GDScriptInternal", "EditorIcons"]}}
 
-	for prop in ProjectSettings.get_property_list():
-		if prop.name.begins_with('dialogic/settings/'):
-			suggestions[prop.name.trim_prefix('dialogic/settings/')] = {'value':prop.name.trim_prefix('dialogic/settings/'), 'editor_icon':["GDScript", "EditorIcons"]}
+	for prop in DialogicSettings.get_setting('dialogic/settings'):
+		suggestions[prop.name] = {'value':prop.name, 'editor_icon':["GDScript", "EditorIcons"]}
 	return suggestions
 
 
 func get_value_suggestions(_filter:String) -> Dictionary:
 	var suggestions := {}
 
-	var vars: Dictionary = ProjectSettings.get_setting('dialogic/variables', {})
+	var vars: Dictionary = DialogicSettings.get_setting('dialogic/variables', {})
 	for var_path in DialogicUtil.list_variables(vars):
 		suggestions[var_path] = {'value':var_path, 'editor_icon':["ClassList", "EditorIcons"]}
 	return suggestions

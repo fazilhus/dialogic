@@ -63,7 +63,7 @@ static func get_module_path(name:String, builtin:=true) -> String:
 	if builtin:
 		return "res://addons/dialogic/Modules".path_join(name)
 	else:
-		return ProjectSettings.get_setting('dialogic/extensions_folder', 'res://addons/dialogic_additions').path_join(name)
+		return DialogicSettings.get_setting('dialogic/extensions_folder', 'res://addons/dialogic_additions').path_join(name)
 
 
 ## This is a private and editor-only function.
@@ -109,7 +109,7 @@ static func get_indexers(include_custom := true, force_reload := false) -> Array
 			indexers.append(load(possible_script).new())
 
 	if include_custom:
-		var extensions_folder: String = ProjectSettings.get_setting('dialogic/extensions_folder', "res://addons/dialogic_additions/")
+		var extensions_folder: String = DialogicSettings.get_setting('dialogic/extensions_folder', "res://addons/dialogic_additions/")
 		for file in listdir(extensions_folder, false, false):
 			var possible_script: String = extensions_folder.path_join(file + "/index.gd")
 			if ResourceLoader.exists(possible_script):
@@ -184,7 +184,7 @@ static func get_color(value:String) -> Color:
 #region TIMER PROCESS MODE
 ################################################################################
 static func is_physics_timer() -> bool:
-	return ProjectSettings.get_setting('dialogic/timer/process_in_physics', false)
+	return DialogicSettings.get_setting('dialogic/timer/process_in_physics', false)
 
 
 static func update_timer_process_callback(timer:Timer) -> void:
@@ -220,8 +220,8 @@ static func multitween(tweened_value:Variant, item:Node, property:String, part:S
 ################################################################################
 
 static func get_next_translation_id() -> String:
-	ProjectSettings.set_setting('dialogic/translation/id_counter', ProjectSettings.get_setting('dialogic/translation/id_counter', 16)+1)
-	return '%x' % ProjectSettings.get_setting('dialogic/translation/id_counter', 16)
+	DialogicSettings.set_setting('dialogic/translation/id_counter', DialogicSettings.get_setting('dialogic/translation/id_counter', 16)+1)
+	return '%x' % DialogicSettings.get_setting('dialogic/translation/id_counter', 16)
 
 #endregion
 
@@ -233,7 +233,7 @@ enum VarTypes {ANY, STRING, FLOAT, INT, BOOL}
 
 
 static func get_default_variables() -> Dictionary:
-	return ProjectSettings.get_setting('dialogic/variables', {})
+	return DialogicSettings.get_setting('dialogic/variables', {})
 
 
 # helper that converts a nested variable dictionary into an array with paths
@@ -308,7 +308,7 @@ static func get_fallback_style() -> DialogicStyle:
 
 
 static func get_default_style() -> DialogicStyle:
-	var default: String = ProjectSettings.get_setting('dialogic/layout/default_style', '')
+	var default: String = DialogicSettings.get_setting('dialogic/layout/default_style', '')
 	if !ResourceLoader.exists(default):
 		return get_fallback_style()
 	return load(default)
@@ -318,7 +318,7 @@ static func get_style_by_name(name:String) -> DialogicStyle:
 	if name.is_empty():
 		return get_default_style()
 
-	var styles: Array = ProjectSettings.get_setting('dialogic/layout/style_list', [])
+	var styles: Array = DialogicSettings.get_setting('dialogic/layout/style_list', [])
 	for style in styles:
 		if not ResourceLoader.exists(style):
 			continue
@@ -574,10 +574,10 @@ static func _on_export_dict_submitted(property_name:String, value:Variant, calla
 
 static func get_custom_event_defaults(event_name:String) -> Dictionary:
 	if Engine.is_editor_hint():
-		return ProjectSettings.get_setting('dialogic/event_default_overrides', {}).get(event_name, {})
+		return DialogicSettings.get_setting('dialogic/event_default_overrides', {}).get(event_name, {})
 	else:
 		if !Engine.get_main_loop().has_meta('dialogic_event_defaults'):
-			Engine.get_main_loop().set_meta('dialogic_event_defaults', ProjectSettings.get_setting('dialogic/event_default_overrides', {}))
+			Engine.get_main_loop().set_meta('dialogic_event_defaults', DialogicSettings.get_setting('dialogic/event_default_overrides', {}))
 		return Engine.get_main_loop().get_meta('dialogic_event_defaults').get(event_name, {})
 
 #endregion
@@ -669,7 +669,7 @@ static func get_portrait_suggestions(search_text:String, character:DialogicChara
 static func get_portrait_position_suggestions(search_text := "") -> Dictionary:
 	var icon := load(DialogicUtil.get_module_path("Character").path_join('portrait_position.svg'))
 
-	var setting: String = ProjectSettings.get_setting('dialogic/portraits/position_suggestion_names', 'leftmost, left, center, right, rightmost')
+	var setting: String = DialogicSettings.get_setting('dialogic/portraits/position_suggestion_names', 'leftmost, left, center, right, rightmost')
 
 	var suggestions := {}
 
@@ -698,8 +698,8 @@ static func get_autoload_suggestions(filter:String="") -> Dictionary:
 
 static func get_autoload_script_resource(autoload_name:String) -> Script:
 	var script: Script
-	if autoload_name and ProjectSettings.has_setting('autoload/'+autoload_name):
-		var loaded_autoload := load(ProjectSettings.get_setting('autoload/'+autoload_name).trim_prefix('*'))
+	if autoload_name and DialogicSettings.has_setting('autoload/'+autoload_name):
+		var loaded_autoload := load(DialogicSettings.get_setting('autoload/'+autoload_name).trim_prefix('*'))
 
 		if loaded_autoload is PackedScene:
 			var packed_scene: PackedScene = loaded_autoload
