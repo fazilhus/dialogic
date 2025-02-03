@@ -155,6 +155,7 @@ var Voice := preload("res://addons/dialogic/Modules/Voice/subsystem_voice.gd").n
 
 ## Autoloads are added first, so this happens REALLY early on game startup.
 func _ready() -> void:
+	DialogicSettings.init()
 	_collect_subsystems()
 
 	clear()

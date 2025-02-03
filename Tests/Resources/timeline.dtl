@@ -1,3 +1,7 @@
 join unit_test_character center
 unit_test_character: aaa
 unit_test_character: bbb
+if {Var} == true:
+	unit_test_character: ccc
+else:
+	unit_test_character: ddd

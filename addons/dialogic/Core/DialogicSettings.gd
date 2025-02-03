@@ -44,12 +44,9 @@ static func has_setting(name: String) -> bool:
 	var res = get_setting(name)
 	return res != null
 
-static func get_setting(name: String, default_value: Variant = null, print: bool = false) -> Variant:
+static func get_setting(name: String, default_value: Variant = null) -> Variant:
 	var _v = _settings.get(name)
-	if print:
-		print(name, "\n\n", _v, "\n\n", _settings, '\n')
 	return _v if _v != null else default_value
-
 
 static func set_setting(name: String, value: Variant) -> void:
 	_settings[name] = value
