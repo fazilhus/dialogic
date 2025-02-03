@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b873ho41sklv8"]
 
-[ext_resource type="Script" path="res://addons/dialogic/Editor/Settings/CoreSettingsPages/settings_general.gd" id="2"]
+[ext_resource type="Script" uid="uid://cwakpacnaheqh" path="res://addons/dialogic/Editor/Settings/CoreSettingsPages/settings_general.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://dbpkta2tjsqim" path="res://addons/dialogic/Editor/Common/hint_tooltip_icon.tscn" id="2_kqhx5"]
 [ext_resource type="PackedScene" uid="uid://7mvxuaulctcq" path="res://addons/dialogic/Editor/Events/Fields/field_file.tscn" id="3_i7rug"]
 
@@ -46,6 +46,7 @@ selected = 0
 fit_to_longest_item = false
 item_count = 3
 popup/item_0/text = "Delete Layout Node"
+popup/item_0/id = 0
 popup/item_1/text = "Hide Layout Node"
 popup/item_1/id = 1
 popup/item_2/text = "Keep Layout Node"
@@ -158,6 +159,7 @@ layout_mode = 2
 selected = 0
 item_count = 4
 popup/item_0/text = "Event only"
+popup/item_0/id = 0
 popup/item_1/text = "Event+Subsystem"
 popup/item_1/id = 1
 popup/item_2/text = "Subsystem only"
@@ -197,6 +199,18 @@ text = "Process timers in physics_process"
 [node name="PhysicsTimerButton" type="CheckBox" parent="HBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Import settings from project.godot to json"
+
+[node name="ImportSettingsButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Import"
 
 [connection signal="item_selected" from="HBoxContainer3/LayoutNodeEndBehaviour" to="." method="_on_layout_node_end_behaviour_item_selected"]
 [connection signal="pressed" from="HBoxContainer6/HBoxContainer4/HBoxContainer5/Reload" to="." method="_on_reload_pressed"]

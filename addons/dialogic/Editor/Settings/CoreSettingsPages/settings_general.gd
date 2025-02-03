@@ -2,7 +2,7 @@
 extends DialogicSettingsPage
 
 ## Settings tab that holds genreal dialogic settings.
-
+@onready var import_setting_button : Button = %ImportSettingsButton
 
 func _get_title() -> String:
 	return "General"
@@ -21,6 +21,7 @@ func _ready() -> void:
 	# Signals
 	%ExtensionsFolderPicker.value_changed.connect(_on_ExtensionsFolder_value_changed)
 	%PhysicsTimerButton.toggled.connect(_on_physics_timer_button_toggled)
+	%ImportSettingsButton.pressed.connect(_on_import_settings_button_pressed)
 
 
 	# Extension creator
@@ -37,6 +38,9 @@ func _refresh() -> void:
 func _on_physics_timer_button_toggled(is_toggled: bool) -> void:
 	DialogicSettings.set_setting('dialogic/timer/process_in_physics', is_toggled)
 	DialogicSettings.save()
+
+func _on_import_settings_button_pressed() -> void:
+	DialogicSettings.import_from_project()
 
 
 func _on_ExtensionsFolder_value_changed(property:String, value:String) -> void:

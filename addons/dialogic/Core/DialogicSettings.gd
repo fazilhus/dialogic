@@ -59,3 +59,11 @@ static func globalize_path(name: String) -> String:
 
 static func _parse_setting(name: String) -> PackedStringArray:
 	return name.split("/")
+
+static func import_from_project() -> void:
+	for prop in ProjectSettings.get_property_list():
+		if prop.name.begins_with("dialogic") and !prop.name.contains("settings_file"):
+			_settings[prop.name] = ProjectSettings.get_setting(prop.name)
+			ProjectSettings.clear(prop.name)
+	ProjectSettings.save()
+	save()
